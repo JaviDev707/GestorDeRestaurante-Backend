@@ -2,6 +2,8 @@ package com.Restaurante.GestorDeRestaurante.Entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -20,5 +22,16 @@ public class Carta {
 
     @Column(columnDefinition="TEXT")
     private String descripcion;
+    @Enumerated(EnumType.STRING)
+    private Categoria categoria;
 
+
+    public enum Categoria{
+        ENTRANTE,
+        PRINCIPAL,
+        POSTRE,
+        BEBIDA
+    }
 }
+
+
