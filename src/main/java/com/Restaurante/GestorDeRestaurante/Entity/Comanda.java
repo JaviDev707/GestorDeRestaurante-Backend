@@ -9,8 +9,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.PreUpdate;
 import lombok.Data;
 
 @Entity
@@ -25,14 +23,8 @@ public class Comanda {
     private Mesa mesa;
 
     @OneToMany(mappedBy = "comanda", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<DetallesComanda> platos;
+    private List<DetallesComanda> cuenta;
 
     private double precioTotal;
-
-    @PrePersist
-    @PreUpdate
-    public void calcularPrecioTotal() {
-        this.precioTotal = platos.stream().mapToDouble(DetallesComanda::getSubtotal).sum();
-    }
 
 }

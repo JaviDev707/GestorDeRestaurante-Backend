@@ -1,12 +1,13 @@
 package com.Restaurante.GestorDeRestaurante.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.PreUpdate;
 import lombok.Data;
 
 @Entity
@@ -18,6 +19,8 @@ public class DetallesComanda {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "comanda_id")
+    @JsonIgnore // Evita enviar el campo comanda en cada detalle al cliente
     private Comanda comanda;
 
     @ManyToOne
@@ -26,11 +29,5 @@ public class DetallesComanda {
     private int cantidad;
     private double precioUnitario;
     private double subtotal;
-
-    @PrePersist
-    @PreUpdate
-    public void calcularSubTotal() {
-        this.precioUnitario = plato.getPrecio();   
-        this.subtotal = this.precioUnitario * this.cantidad;
-    }
+    
 }
