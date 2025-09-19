@@ -25,10 +25,10 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
 
     public AuthResponse register(RegisterRequest request) {
-        // Valido si el usuario y el email ya existen
-        if (usuarioRepository.existsByNombre(request.username())) {
-            throw new RuntimeException("El nombre de usuario ya esta en uso.");
-        }
+        // Valido si el usuario (email) ya existe
+        //if (usuarioRepository.existsByNombre(request.username())) {
+        //    throw new RuntimeException("El nombre de usuario ya esta en uso.");
+        //}
         if (usuarioRepository.existsByEmail(request.email())) {
             throw new RuntimeException("El email ya esta en uso.");
         }

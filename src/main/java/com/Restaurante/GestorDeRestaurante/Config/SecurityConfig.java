@@ -2,6 +2,7 @@ package com.Restaurante.GestorDeRestaurante.Config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -29,8 +30,10 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
             .csrf(csrf -> csrf.disable()) // Desactivo CSRF por JWT
+            .cors(cors -> {}) // config de CORS
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/auth/**", "/api/carta/**").permitAll() // Rutas públicas
+                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // Deja pasar preflight (para JWT)
                 .requestMatchers("/api/admin/**").hasRole("ADMIN") // ADMIN
                 .anyRequest().authenticated() // Cualquier otra requiere autenticación
             )
