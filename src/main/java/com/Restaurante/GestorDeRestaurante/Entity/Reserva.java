@@ -26,6 +26,8 @@ public class Reserva {
     private int numComensales;
 
     private LocalDate fecha;
+
+    @Enumerated(EnumType.STRING)
     private Turno turno;
 
     @Enumerated(EnumType.STRING)

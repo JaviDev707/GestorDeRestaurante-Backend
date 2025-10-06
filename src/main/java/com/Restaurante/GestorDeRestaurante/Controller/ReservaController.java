@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.Restaurante.GestorDeRestaurante.DTO.ReservaDTO;
 import com.Restaurante.GestorDeRestaurante.Entity.Reserva;
 import com.Restaurante.GestorDeRestaurante.Entity.Reserva.Turno;
 import com.Restaurante.GestorDeRestaurante.Service.ReservaService;
@@ -49,8 +50,8 @@ public class ReservaController { // * * * CAMBIAR A PATRON DTO * * *
     }
 
     @PostMapping("/nueva")
-    public ResponseEntity<Reserva> nuevaReserva(@RequestBody Reserva reserva){
-        Reserva nueva = reservaService.reservarMesa(reserva);
+    public ResponseEntity<Reserva> nuevaReserva(@RequestBody ReservaDTO reservaDTO){
+        Reserva nueva = reservaService.reservarMesa(reservaDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(nueva);
     }
 

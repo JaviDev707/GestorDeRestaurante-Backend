@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.Restaurante.GestorDeRestaurante.DTO.ReservaDTO;
 import com.Restaurante.GestorDeRestaurante.Entity.Historial_Reservas;
 import com.Restaurante.GestorDeRestaurante.Entity.Mesa;
 import com.Restaurante.GestorDeRestaurante.Entity.Reserva.EstadoReserva;
@@ -50,7 +51,7 @@ public class ReservaService {
      * Obtiene el usuario del JWT y le asigna una mesa segun el numero de comensales, la fecha y el turno.
      * Guarda la Reserva y la marca como CONFIRMADA.
      */
-    public Reserva reservarMesa(Reserva reserva){
+    public Reserva reservarMesa(ReservaDTO reservaDTO){
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String email = auth.getName(); // username/email
@@ -60,15 +61,19 @@ public class ReservaService {
             throw new IllegalArgumentException("Usuario no encontrado");
         }
 
-        List<Mesa> mesasDisponibles = mesaRepository.findMesasLibres(reserva.getFecha(),reserva.getTurno(),reserva.getNumComensales());
+        List<Mesa> mesasDisponibles = mesaRepository.findMesasLibres(reservaDTO.fecha(),reservaDTO.turno(),reservaDTO.numComensales());
         if (mesasDisponibles.isEmpty()) {
             throw new IllegalStateException("No hay mesas disponibles en esa fecha/turno");
         }
 
         Mesa mesa = mesasDisponibles.get(0);
+        Reserva reserva = new Reserva();
 
         reserva.setCliente(cliente);
         reserva.setMesa(mesa);
+        reserva.setNumComensales(reservaDTO.numComensales());
+        reserva.setFecha(reservaDTO.fecha());
+        reserva.setTurno(reservaDTO.turno());
         reserva.setEstado(EstadoReserva.CONFIRMADA);
         
         reservaRepository.save(reserva);
