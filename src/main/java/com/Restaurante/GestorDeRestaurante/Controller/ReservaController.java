@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/api/reservas")
 @RequiredArgsConstructor
-public class ReservaController { // * * * CAMBIAR A PATRON DTO * * *
+public class ReservaController { 
     
     private final ReservaService reservaService;
 
